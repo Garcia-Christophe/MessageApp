@@ -61,10 +61,8 @@ public class MessageAppMainView {
       public void actionPerformed(ActionEvent arg0) {
         JOptionPane.showMessageDialog(MessageAppMainView.this.mFrame,
             "<html>" +
-                "<div style=\"display: flex; flex-direction: column; justify-content: center;\">" +
                 "<p style=\"text-align: center\">UBO M2-TIIL</p>" +
                 "<p style=\"text-align: center\">Département Informatique</p>" +
-                "</div>" +
                 "</html>", "A propos",
             JOptionPane.PLAIN_MESSAGE, logo);
       }

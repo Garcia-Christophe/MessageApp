@@ -42,7 +42,6 @@ public class SignUpController implements ISwitchSignView  {
     if (isInscriptionOk) {
       // Ajout le nouvel utilisateur et remonte l'information de connexion
       this.mEntityManager.writeUserFile(user);
-      this.mSession.connect(user);
     }
 
     return isInscriptionOk;

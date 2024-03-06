@@ -90,10 +90,14 @@ public class MessageAppMainView {
     this.mFrame.setVisible(true);
   }
 
-  public void showCenter(JPanel panel) {
+  public void showCenter(JPanel panelLeft, JPanel panelRight) {
     this.panelCenter.removeAll();
-    this.panelCenter.add(panel, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
-        GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.panelCenter.add(panelLeft, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+        GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+    if (panelRight != null) {
+      this.panelCenter.add(panelRight, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+          GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+    }
     this.panelCenter.revalidate();
     this.panelCenter.repaint();
   }

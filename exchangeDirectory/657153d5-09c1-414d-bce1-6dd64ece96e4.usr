@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:userXml xmlns:ns2="http://www.example.org/message/">
-    <ID>08ed2fc1-fed7-4075-acea-c2640677ac3c</ID>
+    <ID>657153d5-09c1-414d-bce1-6dd64ece96e4</ID>
     <UserTag>b</UserTag>
     <UserPassword>b</UserPassword>
-    <Name>Test 2</Name>
-    <AvatarPath>C:\Users\Christophe\Documents\Importants\Initiales.png</AvatarPath>
+    <Name>Test B</Name>
+    <AvatarPath>C:\Users\Christophe\Documents\Importants\lu_et_approuve.png</AvatarPath>
 </ns2:userXml>

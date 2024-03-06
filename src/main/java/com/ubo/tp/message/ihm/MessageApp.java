@@ -5,6 +5,7 @@ import java.io.File;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
 import main.java.com.ubo.tp.message.ihm.session.ISessionObserver;
 import main.java.com.ubo.tp.message.ihm.session.Session;
+import main.java.com.ubo.tp.message.message.MessagesModuleComponent;
 import main.java.com.ubo.tp.message.sign.SignComponent;
 import main.java.com.ubo.tp.message.core.EntityManager;
 import main.java.com.ubo.tp.message.core.database.IDatabase;
@@ -13,7 +14,7 @@ import main.java.com.ubo.tp.message.core.directory.IWatchableDirectory;
 import main.java.com.ubo.tp.message.core.directory.WatchableDirectory;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
-import main.java.com.ubo.tp.message.user.UserComponent;
+import main.java.com.ubo.tp.message.user.UsersModuleComponent;
 
 import javax.swing.*;
 
@@ -64,7 +65,9 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 	protected SignComponent signComponent;
 
-	protected UserComponent userComponent;
+	protected UsersModuleComponent usersModuleComponent;
+
+	protected MessagesModuleComponent messagesModuleComponent;
 
 	/**
 	 * Constructeur.
@@ -84,7 +87,8 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 		// Controleurs
 		this.signComponent = new SignComponent(this.mDatabase, this.mEntityManager, this.mSession);
-		this.userComponent = new UserComponent(this.mDatabase, this.mSession);
+		this.usersModuleComponent = new UsersModuleComponent(this.mDatabase, this.mSession);
+		this.messagesModuleComponent = new MessagesModuleComponent(this.mDatabase, this.mSession, this.mEntityManager);
 	}
 
 	/**
@@ -138,9 +142,10 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 		// init GUI des vues des composants
 		this.signComponent.initGUI();
-		this.userComponent.initGUI();
+		this.usersModuleComponent.initGUI();
+		this.messagesModuleComponent.initGUI();
 
-		this.mMainView.showCenter(this.signComponent.getSignView());
+		this.mMainView.showCenter(this.signComponent.getSignView(), null);
 	}
 
 	/**
@@ -150,12 +155,11 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 	 * pouvoir utiliser l'application</b>
 	 */
 	protected void initDirectory() {
-		/*String exchangeDirectoryPath = null;
+		String exchangeDirectoryPath = null;
 		while(exchangeDirectoryPath == null || !isValideExchangeDirectory(new File(exchangeDirectoryPath))) {
 			exchangeDirectoryPath = this.mMainView.getExchangeDirectoryPath();
 		}
-		this.initDirectory(exchangeDirectoryPath);*/
-		this.initDirectory(".");
+		this.initDirectory(exchangeDirectoryPath);
 	}
 
 	/**
@@ -222,7 +226,7 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 		// login session
 		System.out.println("MessageApp: Session m'informe de la connexion d'un utilisateur");
 
-		this.mMainView.showCenter(this.userComponent.getUserView());
+		this.mMainView.showCenter(this.messagesModuleComponent.getMessagesModuleView(), this.usersModuleComponent.getUsersModuleView());
 		this.mMainView.showNorth(this.signComponent.getSignView());
 	}
 
@@ -231,7 +235,7 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 		// logout session
 		System.out.println("MessageApp: Session m'informe de la déconnexion d'un utilisateur");
 
-		this.mMainView.showCenter(this.signComponent.getSignView());
+		this.mMainView.showCenter(this.signComponent.getSignView(), null);
 		this.mMainView.showNorth(new JPanel());
 	}
 }

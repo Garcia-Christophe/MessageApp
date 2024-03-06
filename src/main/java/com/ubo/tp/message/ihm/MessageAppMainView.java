@@ -17,6 +17,10 @@ public class MessageAppMainView {
    */
   protected JFrame mFrame;
 
+  protected JPanel panelCenter;
+
+  protected JPanel panelNorth;
+
   protected String getExchangeDirectoryPath() {
     String exchangeDirectoryPath = null;
 
@@ -40,7 +44,14 @@ public class MessageAppMainView {
     this.mFrame = new JFrame("MessageApp");
     ImageIcon logo = new ImageIcon("src/main/resources/images/logo_50.png");
     this.mFrame.setIconImage(logo.getImage());
-    this.mFrame.setLayout(new GridBagLayout());
+
+    // Setup panels
+    this.panelCenter = new JPanel();
+    this.panelCenter.setLayout(new GridBagLayout());
+    this.mFrame.add(this.panelCenter, BorderLayout.CENTER);
+    this.panelNorth = new JPanel();
+    this.panelNorth.setLayout(new GridBagLayout());
+    this.mFrame.add(this.panelNorth, BorderLayout.NORTH);
 
     // Ajout du menu
     JMenuBar menubar = new JMenuBar();
@@ -74,9 +85,24 @@ public class MessageAppMainView {
 
     // Affichage
     Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-    this.mFrame.setMinimumSize(new Dimension(screenSize.width / 2, screenSize.height / 2));
+    this.mFrame.setSize(new Dimension(screenSize.width / 2, screenSize.height / 2));
     this.mFrame.setLocationRelativeTo(null);
     this.mFrame.setVisible(true);
-    this.mFrame.pack();
+  }
+
+  public void showCenter(JPanel panel) {
+    this.panelCenter.removeAll();
+    this.panelCenter.add(panel, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+        GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.panelCenter.revalidate();
+    this.panelCenter.repaint();
+  }
+
+  public void showNorth(JPanel panel) {
+    this.panelNorth.removeAll();
+    this.panelNorth.add(panel, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+        GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+    this.panelNorth.revalidate();
+    this.panelNorth.repaint();
   }
 }

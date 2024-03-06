@@ -2,6 +2,10 @@ package main.java.com.ubo.tp.message.ihm;
 
 import java.io.File;
 
+import main.java.com.ubo.tp.message.ihm.session.ISession;
+import main.java.com.ubo.tp.message.ihm.session.ISessionObserver;
+import main.java.com.ubo.tp.message.ihm.session.Session;
+import main.java.com.ubo.tp.message.sign.SignComponent;
 import main.java.com.ubo.tp.message.core.EntityManager;
 import main.java.com.ubo.tp.message.core.database.IDatabase;
 import main.java.com.ubo.tp.message.core.database.IDatabaseObserver;
@@ -9,6 +13,7 @@ import main.java.com.ubo.tp.message.core.directory.IWatchableDirectory;
 import main.java.com.ubo.tp.message.core.directory.WatchableDirectory;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
+import main.java.com.ubo.tp.message.user.UserComponent;
 
 import javax.swing.*;
 
@@ -17,7 +22,7 @@ import javax.swing.*;
  *
  * @author S.Lucas
  */
-public class MessageApp implements IDatabaseObserver {
+public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 	/**
 	 * Apparence lookandfeel de l'application.
@@ -29,6 +34,8 @@ public class MessageApp implements IDatabaseObserver {
 	 * Base de données.
 	 */
 	protected IDatabase mDatabase;
+
+	protected ISession mSession;
 
 	/**
 	 * Gestionnaire des entités contenu de la base de données.
@@ -55,6 +62,10 @@ public class MessageApp implements IDatabaseObserver {
 	 */
 	protected String mUiClassName;
 
+	protected SignComponent signComponent;
+
+	protected UserComponent userComponent;
+
 	/**
 	 * Constructeur.
 	 *
@@ -68,6 +79,12 @@ public class MessageApp implements IDatabaseObserver {
 
 		// Observe la base de données
 		this.mDatabase.addObserver(this);
+		this.mSession = new Session();
+		this.mSession.addObserver(this);
+
+		// Controleurs
+		this.signComponent = new SignComponent(this.mDatabase, this.mEntityManager, this.mSession);
+		this.userComponent = new UserComponent(this.mDatabase, this.mSession);
 	}
 
 	/**
@@ -88,33 +105,42 @@ public class MessageApp implements IDatabaseObserver {
 	 * Initialisation du look and feel de l'application.
 	 */
 	protected void initLookAndFeel() {
-		// Par défaut, LOOK_AND_FEEL = "System"
-		String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+		String lookAndFeel = null;
 
-			switch(LOOK_AND_FEEL) {
-				case "Metal":
-					lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-					break;
-				case "Motif":
-					lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
-					break;
-				case "GTK":
-					lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
-					break;
-			}
+		switch(LOOK_AND_FEEL) {
+			case "Metal":
+				lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+				break;
+			case "System":
+				lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+				break;
+			case "Motif":
+				lookAndFeel = "com.sun.java.swing.plaf.motif.MotifLookAndFeel";
+				break;
+			case "GTK":
+				lookAndFeel = "com.sun.java.swing.plaf.gtk.GTKLookAndFeel";
+				break;
+		}
 
-			try {
-				UIManager.setLookAndFeel(lookAndFeel);
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-			}
+		try {
+			UIManager.setLookAndFeel(lookAndFeel);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 	/**
 	 * Initialisation de l'interface graphique.
 	 */
 	protected void initGui() {
+		// init GUI de la vue principale
 		this.mMainView.initGUI();
+
+		// init GUI des vues des composants
+		this.signComponent.initGUI();
+		this.userComponent.initGUI();
+
+		this.mMainView.showCenter(this.signComponent.getSignView());
 	}
 
 	/**
@@ -124,11 +150,12 @@ public class MessageApp implements IDatabaseObserver {
 	 * pouvoir utiliser l'application</b>
 	 */
 	protected void initDirectory() {
-		String exchangeDirectoryPath = null;
+		/*String exchangeDirectoryPath = null;
 		while(exchangeDirectoryPath == null || !isValideExchangeDirectory(new File(exchangeDirectoryPath))) {
 			exchangeDirectoryPath = this.mMainView.getExchangeDirectoryPath();
 		}
-		this.initDirectory(exchangeDirectoryPath);
+		this.initDirectory(exchangeDirectoryPath);*/
+		this.initDirectory(".");
 	}
 
 	/**
@@ -162,31 +189,49 @@ public class MessageApp implements IDatabaseObserver {
 
 	@Override
 	public void notifyMessageAdded(Message addedMessage) {
-		System.out.println("Message ajouté");
+		System.out.println("MessageApp : database m'informe qu'un message a été ajouté");
 	}
 
 	@Override
 	public void notifyMessageDeleted(Message deletedMessage) {
-		System.out.println("Message supprimé");
+		System.out.println("MessageApp : database m'informe qu'un message a été supprimé");
 	}
 
 	@Override
 	public void notifyMessageModified(Message modifiedMessage) {
-		System.out.println("Message modifié");
+		System.out.println("MessageApp : database m'informe qu'un message a été modifié");
 	}
 
 	@Override
 	public void notifyUserAdded(User addedUser) {
-		System.out.println("Utilisateur ajouté");
+		System.out.println("MessageApp : database m'informe qu'un utilisateur été ajouté");
 	}
 
 	@Override
 	public void notifyUserDeleted(User deletedUser) {
-		System.out.println("Utilisateur supprimé");
+		System.out.println("MessageApp : database m'informe qu'un utilisateur été supprimé");
 	}
 
 	@Override
 	public void notifyUserModified(User modifiedUser) {
-		System.out.println("Utilisateur modifié");
+		System.out.println("MessageApp : database m'informe qu'un utilisateur été modifié");
+	}
+
+	@Override
+	public void notifyLogin(User connectedUser) {
+		// login session
+		System.out.println("MessageApp: Session m'informe de la connexion d'un utilisateur");
+
+		this.mMainView.showCenter(this.userComponent.getUserView());
+		this.mMainView.showNorth(this.signComponent.getSignView());
+	}
+
+	@Override
+	public void notifyLogout() {
+		// logout session
+		System.out.println("MessageApp: Session m'informe de la déconnexion d'un utilisateur");
+
+		this.mMainView.showCenter(this.signComponent.getSignView());
+		this.mMainView.showNorth(new JPanel());
 	}
 }

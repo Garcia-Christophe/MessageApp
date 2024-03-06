@@ -1,5 +1,6 @@
 package main.java.com.ubo.tp.message.common;
 
+import java.awt.*;
 import java.util.UUID;
 
 /**
@@ -62,4 +63,10 @@ public interface Constants {
 	 * Clé de configuration pour le mode bouchoné
 	 */
 	public static final String CONFIGURATION_KEY_MOCK_ENABLED = "MOCK_ENABLED";
+
+	public static final Color COLOR_BACKGROUND = new Color(30, 31, 34);
+
+	public static final Color COLOR_BACKGROUND_MENU = new Color(43, 45, 48);
+
+	public static final Color COLOR_WHITE = new Color(255, 255, 255);
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:userXml xmlns:ns2="http://www.example.org/message/">
+    <ID>773d5cdb-0b0b-40c0-8249-af90bdc4ea9a</ID>
+    <UserTag>f</UserTag>
+    <UserPassword>f</UserPassword>
+    <Name>Test F</Name>
+    <AvatarPath>C:\Users\Christophe\Documents\Alibaba\reductions_HelloFresh_Senheiser_Emma.png</AvatarPath>
+</ns2:userXml>

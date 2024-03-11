@@ -7,7 +7,7 @@ import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
 import main.java.com.ubo.tp.message.message.IMessageInputObserver;
-import main.java.com.ubo.tp.message.message.ISearchModelObserver;
+import main.java.com.ubo.tp.message.core.ISearchModelObserver;
 import main.java.com.ubo.tp.message.message.model.ListMessagesModel;
 import main.java.com.ubo.tp.message.message.model.SearchMessageModel;
 import main.java.com.ubo.tp.message.message.view.MessageInputView;
@@ -15,6 +15,9 @@ import main.java.com.ubo.tp.message.message.view.MessagesListView;
 import main.java.com.ubo.tp.message.message.view.MessagesModuleView;
 import main.java.com.ubo.tp.message.message.view.SearchMessageView;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -65,7 +68,7 @@ public class MessagesModuleComponent implements IMessageInputObserver, IDatabase
     this.searchMessageView.initGUI();
     this.messagesModuleView.setNorth(this.searchMessageView);
 
-    // Vue liste
+    // Vue liste users
     this.messagesListView.initGUI();
     this.messagesModuleView.setCenter(this.messagesListView);
     this.listMessagesModel.addObserver(this.messagesListView);
@@ -78,7 +81,6 @@ public class MessagesModuleComponent implements IMessageInputObserver, IDatabase
 
   public MessagesModuleView getMessagesModuleView() {
     this.listMessagesModel.setFilteredMessagesList(this.mDatabase.getMessages()); // donne la liste à afficher
-
     return this.messagesModuleView;
   }
 
@@ -124,6 +126,35 @@ public class MessagesModuleComponent implements IMessageInputObserver, IDatabase
     // Mise à jour de la liste des messages
     // Modification éventuelle de la liste des messages affichée (si filtre applicable sur le nouveau message)
     this.listMessagesModel.setFilteredMessagesList(this.getFilteredMessages(this.searchMessageModel.getSearchString()));
+
+    // Notification d'un nouveau message
+    if (this.messagesListView.getDateTime() < addedMessage.getEmissionDate() && this.mSession.getConnectedUser().isFollowing(addedMessage.getSender())) {
+      if (SystemTray.isSupported()) {
+        SystemTray tray = SystemTray.getSystemTray();
+        Image icon = Toolkit.getDefaultToolkit().getImage("src/main/resources/images/logo_20.png");
+        PopupMenu popupMenu = new PopupMenu();
+        MenuItem exitItem = new MenuItem("Quitter");
+        exitItem.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+          }
+        });
+        popupMenu.add(exitItem);
+
+        // Création de l'objet TrayIcon
+        TrayIcon trayIcon = new TrayIcon(icon, "Notification", popupMenu);
+        try {
+          tray.add(trayIcon); // Ajouter l'objet TrayIcon au SystemTray
+        } catch (AWTException e) {
+          System.err.println("Impossible d'ajouter TrayIcon au SystemTray");
+        }
+
+        // Affichage de la notification
+        trayIcon.displayMessage("Nouveau message de \"" + addedMessage.getSender().getName() + "\"", addedMessage.getText(), TrayIcon.MessageType.INFO);
+      } else {
+        System.err.println("SystremTray n'est pas pris en charge !");
+      }
+    }
   }
 
   @Override
@@ -152,7 +183,10 @@ public class MessagesModuleComponent implements IMessageInputObserver, IDatabase
 
   @Override
   public void notifyUserModified(User modifiedUser) {
-    // rien
+    if (this.mSession.getConnectedUser().equals(modifiedUser)) {
+      this.messagesListView.updateDateTime();
+      this.messagesListView.refreshView();
+    }
   }
 
   @Override

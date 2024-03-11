@@ -5,4 +5,5 @@
     <UserPassword>c</UserPassword>
     <Name>Test C</Name>
     <AvatarPath>C:\Users\Christophe\Documents\Importants\signature.png</AvatarPath>
+    <follows>a</follows>
 </ns2:userXml>

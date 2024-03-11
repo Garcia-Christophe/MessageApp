@@ -12,14 +12,20 @@ import java.util.TimeZone;
 
 public class MessageView extends JPanel {
 
-  public MessageView(Message message, boolean ownMessage) {
+  public MessageView(Message message, boolean ownMessage, boolean followed) {
     this.setLayout(new GridBagLayout());
     this.removeAll();
 
     // bordures
     this.setOpaque(true);
     this.setBorder(new LineBorder(Color.BLACK, 1, true));
-    this.setBackground(ownMessage ? Color.CYAN : Color.WHITE);
+    if (ownMessage) {
+      this.setBackground(Color.CYAN);
+    } else if (followed) {
+      this.setBackground(Color.PINK);
+    } else {
+      this.setBackground(Color.WHITE);
+    }
 
     // nom + tag
     User user = message.getSender();

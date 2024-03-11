@@ -72,7 +72,6 @@ public class SignComponent implements ISessionObserver, ISign, ISwitchSignViewOb
   @Override
   public void notifyLogin(User connectedUser) {
     this.mConnectedUser = connectedUser;
-    this.signOutView.refreshView();
     this.signView.show(this.signOutView);
 
     for (ISignObserver observer : this.mObservers) {

@@ -7,10 +7,7 @@ import main.java.com.ubo.tp.message.message.IListMessagesModelObserver;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class MessagesListView extends JPanel implements IListMessagesModelObserver {
 
@@ -20,10 +17,13 @@ public class MessagesListView extends JPanel implements IListMessagesModelObserv
 
   protected Set<Message> messagesList;
 
+  protected long dateTime;
+
   public MessagesListView(ISession session) {
     this.mSession = session;
     this.messagesList = new HashSet<>();
     this.messagesPanel = new JPanel();
+    this.updateDateTime();
 
     this.setLayout(new GridBagLayout());
     this.setVisible(true);
@@ -51,7 +51,8 @@ public class MessagesListView extends JPanel implements IListMessagesModelObserv
     while (messagesIt.hasNext()) {
       Message message = messagesIt.next();
       boolean userMessage = message.getSender().getUserTag().equals(this.mSession.getConnectedUser().getUserTag());
-      this.messagesPanel.add(new MessageView(message, userMessage), new GridBagConstraints(0, nbMessage, 1, 1, 1, 1, userMessage ? GridBagConstraints.EAST : GridBagConstraints.WEST,
+      boolean newFollowedMsg = this.dateTime < message.getEmissionDate() && this.mSession.getConnectedUser().isFollowing(message.getSender());
+      this.messagesPanel.add(new MessageView(message, userMessage, newFollowedMsg), new GridBagConstraints(0, nbMessage, 1, 1, 1, 1, userMessage ? GridBagConstraints.EAST : GridBagConstraints.WEST,
             GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
       nbMessage++;
     }
@@ -64,5 +65,13 @@ public class MessagesListView extends JPanel implements IListMessagesModelObserv
   public void listMessagesChanged(Set<Message> referenceList) {
     this.messagesList = referenceList;
     this.refreshView();
+  }
+
+  public void updateDateTime() {
+    this.dateTime = new Date().getTime();
+  }
+
+  public long getDateTime() {
+    return this.dateTime;
   }
 }

@@ -5,4 +5,6 @@
     <UserPassword>a</UserPassword>
     <Name>Test A</Name>
     <AvatarPath>C:\Users\Christophe\Documents\Importants\Initiales.png</AvatarPath>
+    <follows>c</follows>
+    <follows>e</follows>
 </ns2:userXml>

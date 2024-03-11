@@ -3,11 +3,8 @@ package main.java.com.ubo.tp.message.message.model;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.message.IListMessagesModel;
 import main.java.com.ubo.tp.message.message.IListMessagesModelObserver;
-import main.java.com.ubo.tp.message.message.ISearchModel;
-import main.java.com.ubo.tp.message.message.ISearchModelObserver;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

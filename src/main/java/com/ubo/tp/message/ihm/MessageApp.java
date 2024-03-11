@@ -87,7 +87,7 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 		// Controleurs
 		this.signComponent = new SignComponent(this.mDatabase, this.mEntityManager, this.mSession);
-		this.usersModuleComponent = new UsersModuleComponent(this.mDatabase, this.mSession);
+		this.usersModuleComponent = new UsersModuleComponent(this.mDatabase, this.mSession, this.mEntityManager);
 		this.messagesModuleComponent = new MessagesModuleComponent(this.mDatabase, this.mSession, this.mEntityManager);
 	}
 
@@ -208,17 +208,17 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 	@Override
 	public void notifyUserAdded(User addedUser) {
-		System.out.println("MessageApp : database m'informe qu'un utilisateur été ajouté");
+		System.out.println("MessageApp : database m'informe qu'un utilisateur a été ajouté");
 	}
 
 	@Override
 	public void notifyUserDeleted(User deletedUser) {
-		System.out.println("MessageApp : database m'informe qu'un utilisateur été supprimé");
+		System.out.println("MessageApp : database m'informe qu'un utilisateur a été supprimé");
 	}
 
 	@Override
 	public void notifyUserModified(User modifiedUser) {
-		System.out.println("MessageApp : database m'informe qu'un utilisateur été modifié");
+		System.out.println("MessageApp : database m'informe qu'un utilisateur a été modifié");
 	}
 
 	@Override

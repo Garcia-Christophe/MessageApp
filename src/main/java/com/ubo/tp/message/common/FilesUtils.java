@@ -15,7 +15,7 @@ public class FilesUtils {
 	/**
 	 * Déplacement du fichier source vers le fichier destination.
 	 *
-	 * @param sourceFileName , Chemin du fichier source
+	 * @param sourceFile , Fichier source
 	 * @param destFileName   , Chemin du fichier de destination
 	 * @return un booléen indiquant si le déplacement s'est déroulé avec succès.
 	 */

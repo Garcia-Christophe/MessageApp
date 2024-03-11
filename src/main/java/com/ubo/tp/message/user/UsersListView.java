@@ -7,6 +7,7 @@ import main.java.com.ubo.tp.message.ihm.session.ISession;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Iterator;
+import java.util.Set;
 
 public class UsersListView extends JPanel {
 
@@ -21,6 +22,10 @@ public class UsersListView extends JPanel {
     this.mSession = session;
 
     this.setLayout(new GridBagLayout());
+    this.setVisible(true);
+  }
+
+  public void initGUI() {
     this.usersPanel = new JPanel();
     this.usersPanel.setLayout(new GridBagLayout());
     JScrollPane scrollPane = new JScrollPane(usersPanel,
@@ -29,28 +34,19 @@ public class UsersListView extends JPanel {
     scrollPane.getVerticalScrollBar().setUnitIncrement(10);
     this.add(scrollPane, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
         GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-
-    this.setVisible(true);
   }
 
-  public void refreshView() {
+  public void addUser(UserView userView, int gridy) {
+    this.usersPanel.add(userView, new GridBagConstraints(0, gridy, 1, 1, 1, 1, GridBagConstraints.CENTER,
+        GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+  }
+
+  public void removeContent() {
     this.usersPanel.removeAll();
-
-    // Affichage de la liste des utilisateurs
-    Iterator<User> usersIt = this.mDatabase.getUsers().iterator();
-    int nbUser = 0;
-
-    while (usersIt.hasNext()) {
-      User user = usersIt.next();
-      if (!user.getUserTag().equals(this.mSession.getConnectedUser().getUserTag())) {
-        this.usersPanel.add(new UserView(user), new GridBagConstraints(0, nbUser, 1, 1, 1, 1, GridBagConstraints.CENTER,
-            GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-      }
-      nbUser++;
-    }
-
-    this.revalidate();
-    this.repaint();
   }
 
+  public void update() {
+    this.usersPanel.revalidate();
+    this.usersPanel.repaint();
+  }
 }

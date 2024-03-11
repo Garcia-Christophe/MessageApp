@@ -15,7 +15,4 @@ public class SignOutController {
     this.mSession.disconnect();
   }
 
-  public User getUser() {
-    return this.mSession.getConnectedUser();
-  }
 }

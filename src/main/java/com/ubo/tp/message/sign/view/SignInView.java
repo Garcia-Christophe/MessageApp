@@ -64,8 +64,13 @@ public class SignInView extends JPanel {
         SignInView.this.password = new String(SignInView.this.inputPassword.getPassword());
         if (SignInView.this.signInController.signIn(SignInView.this.tag, SignInView.this.password)) {
           System.out.println("Utilisateur connecté");
+
+          SignInView.this.tag = "";
+          SignInView.this.password = "";
+          SignInView.this.inputTag.setText("");
+          SignInView.this.inputPassword.setText("");
         } else {
-          System.out.println("Impossible de connecter l'utilisateur");
+          System.err.println("Utilisateur inconnu ou mauvais mot de passe !");
         }
       }
     });

@@ -15,23 +15,6 @@ public class SignOutView extends JPanel {
     this.signOutController = controller;
     this.setLayout(new GridBagLayout());
 
-    this.setVisible(true);
-  }
-
-  public void refreshView() {
-    User user = this.signOutController.getUser();
-    this.removeAll();
-
-    // Avatar de l'utilisateur
-    JLabel imgAvatar = new JLabel(new ImageIcon(new ImageIcon(user.getAvatarPath()).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
-    this.add(imgAvatar, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.WEST,
-        GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
-    // Tag et nom de l'utilisateur
-    JLabel userLabel = new JLabel(user.getName() + "(" + user.getUserTag() + ")");
-    this.add(userLabel, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
-        GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
     // Bouton Se déconnecter
     JButton buttonSignOut = new JButton("Se déconnecter");
     this.add(buttonSignOut, new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.EAST,
@@ -43,7 +26,6 @@ public class SignOutView extends JPanel {
       }
     });
 
-    this.revalidate();
-    this.repaint();
+    this.setVisible(true);
   }
 }

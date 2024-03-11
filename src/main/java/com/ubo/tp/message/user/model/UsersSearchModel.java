@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.message.message.model;
+package main.java.com.ubo.tp.message.user.model;
 
 import main.java.com.ubo.tp.message.core.ISearchModel;
 import main.java.com.ubo.tp.message.core.ISearchModelObserver;
@@ -6,13 +6,13 @@ import main.java.com.ubo.tp.message.core.ISearchModelObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchMessageModel implements ISearchModel {
+public class UsersSearchModel implements ISearchModel {
 
   protected String searchString;
 
   protected List<ISearchModelObserver> observers;
 
-  public SearchMessageModel() {
+  public UsersSearchModel() {
     this.searchString = "";
     this.observers = new ArrayList<>();
   }

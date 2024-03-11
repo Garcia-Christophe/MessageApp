@@ -1,12 +1,9 @@
 TODO:
 
-- modifier un message (à soi) - vérifier la mise à jour de la liste de messages filtrées
-- supprimer un message (à soi) - same
-- espace modifiable du user connecté (à mettre en-haut à gauche)
-	- à mettre dans le composant user ?
-	- mettre la view logout (avec JUSTE le bouton logout) enhaut à droite
+Obligatoires : 
 - refaire une bdd 
 	- recréer 4 ou 5 users
 	- recréer des messages
 		- avec userTags ('@'), tags ('#'), rien
 		- par plusieurs users
+

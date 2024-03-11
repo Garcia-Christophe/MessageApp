@@ -64,9 +64,4 @@ public interface Constants {
 	 */
 	public static final String CONFIGURATION_KEY_MOCK_ENABLED = "MOCK_ENABLED";
 
-	public static final Color COLOR_BACKGROUND = new Color(30, 31, 34);
-
-	public static final Color COLOR_BACKGROUND_MENU = new Color(43, 45, 48);
-
-	public static final Color COLOR_WHITE = new Color(255, 255, 255);
 }

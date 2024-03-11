@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.message.message;
+package main.java.com.ubo.tp.message.core;
 
 public interface ISearchModelObserver {
 

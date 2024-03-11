@@ -1,6 +1,6 @@
-package main.java.com.ubo.tp.message.message.view;
+package main.java.com.ubo.tp.message.user;
 
-import main.java.com.ubo.tp.message.message.model.SearchMessageModel;
+import main.java.com.ubo.tp.message.user.model.UsersSearchModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -8,12 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SearchMessageView extends JPanel {
+public class UsersSearchView extends JPanel {
 
-  protected SearchMessageModel model;
+  protected UsersSearchModel model;
 
-  public SearchMessageView(SearchMessageModel searchMessageModel) {
-    this.model = searchMessageModel;
+  public UsersSearchView(UsersSearchModel searchUserModel) {
+    this.model = searchUserModel;
     this.setLayout(new GridBagLayout());
     this.setVisible(true);
   }
@@ -33,7 +33,7 @@ public class SearchMessageView extends JPanel {
     sendButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        SearchMessageView.this.model.setSearchString(inputMessage.getText() != null ? inputMessage.getText() : "");
+        UsersSearchView.this.model.setSearchString(inputMessage.getText() != null ? inputMessage.getText() : "");
       }
     });
     this.add(sendButton, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,

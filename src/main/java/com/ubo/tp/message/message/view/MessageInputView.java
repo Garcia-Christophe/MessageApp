@@ -1,4 +1,7 @@
-package main.java.com.ubo.tp.message.message;
+package main.java.com.ubo.tp.message.message.view;
+
+import main.java.com.ubo.tp.message.message.IMessageInput;
+import main.java.com.ubo.tp.message.message.IMessageInputObserver;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -16,14 +19,16 @@ public class MessageInputView extends JPanel implements IMessageInput {
 
   public MessageInputView() {
     this.setLayout(new GridBagLayout());
-    this.removeAll();
+    this.inputMessage = new JTextField();
+    this.setVisible(true);
+  }
 
+  public void initGUI() {
     // bordures
     this.setOpaque(true);
     this.setBorder(new LineBorder(Color.BLACK, 1, true));
 
     // champs de saisie du message
-    inputMessage = new JTextField();
     this.add(inputMessage, new GridBagConstraints(0, 0, 1, 1, 10, 1, GridBagConstraints.CENTER,
         GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 10), 0, 0));
 
@@ -32,15 +37,17 @@ public class MessageInputView extends JPanel implements IMessageInput {
     sendButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        for (IMessageInputObserver observer : MessageInputView.this.observers) {
-          observer.newMessage(inputMessage.getText());
+        if (inputMessage.getText().length() <= 200) {
+          for (IMessageInputObserver observer : MessageInputView.this.observers) {
+            observer.newMessage(inputMessage.getText());
+          }
+        } else {
+          System.err.println("Message trop long ! (> 200 caractères)");
         }
       }
     });
     this.add(sendButton, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
         GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-
-    this.setVisible(true);
   }
 
   public void resetInput() {

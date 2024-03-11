@@ -5,7 +5,7 @@ import java.io.File;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
 import main.java.com.ubo.tp.message.ihm.session.ISessionObserver;
 import main.java.com.ubo.tp.message.ihm.session.Session;
-import main.java.com.ubo.tp.message.message.MessagesModuleComponent;
+import main.java.com.ubo.tp.message.message.controller.MessagesModuleComponent;
 import main.java.com.ubo.tp.message.sign.SignComponent;
 import main.java.com.ubo.tp.message.core.EntityManager;
 import main.java.com.ubo.tp.message.core.database.IDatabase;
@@ -188,7 +188,7 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 	}
 
 	public void show() {
-		// ... setVisible?
+		this.mMainView.mFrame.setVisible(true);
 	}
 
 	@Override

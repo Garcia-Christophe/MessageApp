@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.message.message;
+package main.java.com.ubo.tp.message.message.view;
 
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;

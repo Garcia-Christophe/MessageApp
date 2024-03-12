@@ -7,4 +7,8 @@ Obligatoires :
 		- avec userTags ('@'), tags ('#'), rien
 		- par plusieurs users
 - JavaFX
-
+	- connexion : ok
+	- inscription : ok
+	- déconnexion
+	- liste messages
+	- liste users

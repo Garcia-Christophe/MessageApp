@@ -1,8 +1,7 @@
 package main.java.com.ubo.tp.message;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,69 +15,96 @@ import main.java.com.ubo.tp.message.core.directory.WatchableDirectory;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 import main.java.com.ubo.tp.message.ihm.MessageApp;
-import main.java.com.ubo.tp.message.ihm.javafx.FxSignInController;
+import main.java.com.ubo.tp.message.javafx.FxMainController;
+import main.java.com.ubo.tp.message.javafx.FxSignInController;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
 import main.java.com.ubo.tp.message.ihm.session.ISessionObserver;
 import main.java.com.ubo.tp.message.ihm.session.Session;
+import main.java.com.ubo.tp.message.javafx.FxSignUpController;
+import main.java.com.ubo.tp.message.sign.ISwitchSignViewObserver;
 import main.java.com.ubo.tp.message.sign.controller.SignInController;
-import mock.MessageAppMock;
+import main.java.com.ubo.tp.message.sign.controller.SignOutController;
+import main.java.com.ubo.tp.message.sign.controller.SignUpController;
 
-import javax.swing.*;
-import java.io.File;
+import java.io.IOException;
 
 /**
  * Classe de lancement de l'application.
  *
  * @author S.Lucas
  */
-public class MessageAppLauncherFx extends Application implements IDatabaseObserver, ISessionObserver {
+public class MessageAppLauncherFx extends Application implements IDatabaseObserver, ISessionObserver, ISwitchSignViewObserver {
 
+	protected Stage stage;
 	protected IDatabase mDatabase;
 	protected ISession mSession;
 	protected EntityManager mEntityManager;
 	protected IWatchableDirectory mWatchableDirectory;
 	protected String mExchangeDirectoryPath = "C:\\Users\\Christophe\\Documents\\_Projets_\\messageapp\\exchangeDirectory";
 
+	protected String loaderPathMain = "./javafx/fxml_main.fxml";
+	protected String loaderPathConnection = "./javafx/fxml_connection.fxml";
+	protected String loaderPathInscription = "./javafx/fxml_inscription.fxml";
+
+	protected SignInController signInController;
+	protected SignUpController signUpController;
+	protected SignOutController signOutController;
+
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		// init
+		this.stage = stage;
 		mDatabase = new Database();
 		mDatabase.addObserver(this);
 		mEntityManager = new EntityManager(mDatabase);
 		mSession = new Session();
 		mSession.addObserver(this);
 
-		FXMLLoader loaderMain = new FXMLLoader(getClass().getResource("./ihm/javafx/fxml_main.fxml"));
-		FXMLLoader loaderConnection = new FXMLLoader(getClass().getResource("./ihm/javafx/fxml_connection.fxml"));
+		// Lancement de la Frame (Swing)
+		MessageApp messageApp = new MessageApp(mDatabase, mEntityManager, mSession);
+		messageApp.init();
+		messageApp.show();
 
+		// Controleurs
+		// sign in
+		signInController = messageApp.getSignComponent().getSignInController();
+		signInController.addObserver(this);
+		// sign up
+		signUpController = messageApp.getSignComponent().getSignUpController();
+		signUpController.addObserver(this);
+		// sign out
+		signOutController = messageApp.getSignComponent().getSignOutController();
+
+		// Lancement de la Scène (JavaFX)
+		this.switchTo(this.loaderPathConnection);
+	}
+
+	protected void switchTo(String loaderPath) {
 		// controleurs
-		loaderConnection.setControllerFactory(controllerClass -> {
-			SignInController signInController = new SignInController(mDatabase, mEntityManager, mSession);
-			FxSignInController fxSignInController = new FxSignInController(signInController, loaderMain);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(loaderPath));
 
-			if (controllerClass == fxSignInController.getClass()) {
-				return fxSignInController;
+		loader.setControllerFactory(controllerClass -> {
+			if (controllerClass == FxSignInController.class) {
+				return new FxSignInController(signInController);
+			} else if (controllerClass == FxSignUpController.class) {
+				return new FxSignUpController(signUpController);
+			} else if (controllerClass == FxMainController.class) {
+				return new FxMainController(mDatabase, signOutController);
 			}
 			return controllerClass;
 		});
 
-		// init directory
-		this.initDirectory();
-
-		// Lancement de la Scène
-		Parent root = loaderConnection.load();
-		Scene scene = new Scene(root, 300, 275);
-		stage.setTitle("Message App");
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	protected void initDirectory() {
-		mWatchableDirectory = new WatchableDirectory(mExchangeDirectoryPath);
-		mEntityManager.setExchangeDirectory(mExchangeDirectoryPath);
-
-		mWatchableDirectory.initWatching();
-		mWatchableDirectory.addObserver(mEntityManager);
+		Platform.runLater(() -> {
+			try {
+				Parent root = loader.load();
+				Scene scene = new Scene(root, 500, 500);
+				stage.setTitle("MessageApp");
+				stage.setScene(scene);
+				stage.show();
+			} catch(IOException e) {
+				System.err.println(e);
+			}
+		});
 	}
 
 	@Override
@@ -113,11 +139,25 @@ public class MessageAppLauncherFx extends Application implements IDatabaseObserv
 
 	@Override
 	public void notifyLogin(User connectedUser) {
-		System.out.println("MessageAppLauncherFx : notifyLogin");
+		// switch to main
+		switchTo(this.loaderPathMain);
 	}
 
 	@Override
 	public void notifyLogout() {
-		System.out.println("MessageAppLauncherFx : notifyLogout");
+		// switch to sign in
+		switchTo(this.loaderPathConnection);
+	}
+
+	@Override
+	public void notifySwitchToSignInView() {
+		// switch to sign in
+		switchTo(this.loaderPathConnection);
+	}
+
+	@Override
+	public void notifySwitchToSignUpView() {
+		// switch to sign up
+		switchTo(this.loaderPathInscription);
 	}
 }

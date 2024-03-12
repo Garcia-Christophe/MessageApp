@@ -22,7 +22,7 @@ public class MessageAppMainView {
   protected JPanel panelNorth;
 
   protected String getExchangeDirectoryPath() {
-    /*String exchangeDirectoryPath = null;
+    String exchangeDirectoryPath = null;
 
     JFileChooser chooser = new JFileChooser();
     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -33,8 +33,7 @@ public class MessageAppMainView {
       exit(0);
     }
 
-    return exchangeDirectoryPath;*/
-    return "C:\\Users\\Christophe\\Documents\\_Projets_\\messageapp\\exchangeDirectory";
+    return exchangeDirectoryPath;
   }
 
   /**

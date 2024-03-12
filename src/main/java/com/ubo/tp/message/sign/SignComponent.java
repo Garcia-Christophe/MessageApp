@@ -113,4 +113,16 @@ public class SignComponent implements ISessionObserver, ISign, ISwitchSignViewOb
   public void notifySwitchToSignUpView() {
     this.signView.show(this.signUpView);
   }
+
+  public SignInController getSignInController() {
+    return signInController;
+  }
+
+  public SignUpController getSignUpController() {
+    return signUpController;
+  }
+
+  public SignOutController getSignOutController() {
+    return signOutController;
+  }
 }

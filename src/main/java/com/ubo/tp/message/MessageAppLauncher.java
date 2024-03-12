@@ -4,6 +4,8 @@ import main.java.com.ubo.tp.message.core.EntityManager;
 import main.java.com.ubo.tp.message.core.database.Database;
 import main.java.com.ubo.tp.message.core.database.IDatabase;
 import main.java.com.ubo.tp.message.ihm.MessageApp;
+import main.java.com.ubo.tp.message.ihm.session.ISession;
+import main.java.com.ubo.tp.message.ihm.session.Session;
 import mock.MessageAppMock;
 
 /**
@@ -27,13 +29,14 @@ public class MessageAppLauncher {
 
 		IDatabase database = new Database();
 		EntityManager entityManager = new EntityManager(database);
+		ISession session = new Session();
 
 		if (IS_MOCK_ENABLED) {
 			MessageAppMock mock = new MessageAppMock(database, entityManager);
 			mock.showGUI();
 		}
 
-		MessageApp messageApp = new MessageApp(database, entityManager);
+		MessageApp messageApp = new MessageApp(database, entityManager, session);
 		messageApp.init();
 		messageApp.show();
 	}

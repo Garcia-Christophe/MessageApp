@@ -75,14 +75,14 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 	 * @param entityManager
 	 * @param database
 	 */
-	public MessageApp(IDatabase database, EntityManager entityManager) {
+	public MessageApp(IDatabase database, EntityManager entityManager, ISession session) {
 		this.mDatabase = database;
 		this.mEntityManager = entityManager;
 		this.mMainView = new MessageAppMainView();
 
 		// Observe la base de données
 		this.mDatabase.addObserver(this);
-		this.mSession = new Session();
+		this.mSession = session;
 		this.mSession.addObserver(this);
 
 		// Controleurs
@@ -237,5 +237,9 @@ public class MessageApp implements IDatabaseObserver, ISessionObserver {
 
 		this.mMainView.showCenter(this.signComponent.getSignView(), null);
 		this.mMainView.showNorth(new JPanel());
+	}
+
+	public SignComponent getSignComponent() {
+		return signComponent;
 	}
 }

@@ -1,13 +1,10 @@
-package main.java.com.ubo.tp.message.user;
+package main.java.com.ubo.tp.message.user.view;
 
 import main.java.com.ubo.tp.message.core.database.IDatabase;
-import main.java.com.ubo.tp.message.datamodel.User;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
-import java.util.Set;
 
 public class UsersListView extends JPanel {
 

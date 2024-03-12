@@ -6,4 +6,5 @@ Obligatoires :
 	- recréer des messages
 		- avec userTags ('@'), tags ('#'), rien
 		- par plusieurs users
+- JavaFX
 

@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.message.user;
+package main.java.com.ubo.tp.message.user.view;
 
 import main.java.com.ubo.tp.message.user.model.UsersSearchModel;
 

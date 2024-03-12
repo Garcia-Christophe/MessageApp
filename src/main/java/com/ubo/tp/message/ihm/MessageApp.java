@@ -14,7 +14,7 @@ import main.java.com.ubo.tp.message.core.directory.IWatchableDirectory;
 import main.java.com.ubo.tp.message.core.directory.WatchableDirectory;
 import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
-import main.java.com.ubo.tp.message.user.UsersModuleComponent;
+import main.java.com.ubo.tp.message.user.controller.UsersModuleComponent;
 
 import javax.swing.*;
 

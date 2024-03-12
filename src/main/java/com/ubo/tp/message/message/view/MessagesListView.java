@@ -31,9 +31,7 @@ public class MessagesListView extends JPanel implements IListMessagesModelObserv
 
   public void initGUI() {
     this.messagesPanel.setLayout(new GridBagLayout());
-    JScrollPane scrollPane = new JScrollPane(messagesPanel,
-        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-        JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    JScrollPane scrollPane = new JScrollPane(messagesPanel);
     scrollPane.getVerticalScrollBar().setUnitIncrement(10);
     this.add(scrollPane, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
         GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));

@@ -1,15 +1,17 @@
-package main.java.com.ubo.tp.message.user;
+package main.java.com.ubo.tp.message.user.controller;
 
 import main.java.com.ubo.tp.message.core.EntityManager;
 import main.java.com.ubo.tp.message.core.ISearchModelObserver;
 import main.java.com.ubo.tp.message.core.database.IDatabase;
-import main.java.com.ubo.tp.message.datamodel.Message;
 import main.java.com.ubo.tp.message.datamodel.User;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
-import main.java.com.ubo.tp.message.message.model.ListMessagesModel;
-import main.java.com.ubo.tp.message.message.model.SearchMessageModel;
+import main.java.com.ubo.tp.message.user.IListUsersModelObserver;
 import main.java.com.ubo.tp.message.user.model.UsersListModel;
 import main.java.com.ubo.tp.message.user.model.UsersSearchModel;
+import main.java.com.ubo.tp.message.user.view.UserView;
+import main.java.com.ubo.tp.message.user.view.UsersListView;
+import main.java.com.ubo.tp.message.user.view.UsersModuleView;
+import main.java.com.ubo.tp.message.user.view.UsersSearchView;
 
 import java.util.Iterator;
 import java.util.Set;

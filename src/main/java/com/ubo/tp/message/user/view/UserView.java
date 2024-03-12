@@ -1,16 +1,17 @@
-package main.java.com.ubo.tp.message.user;
+package main.java.com.ubo.tp.message.user.view;
 
 import main.java.com.ubo.tp.message.datamodel.User;
-import main.java.com.ubo.tp.message.sign.view.SignOutView;
+import main.java.com.ubo.tp.message.user.controller.UserFollowupController;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class UserView extends JPanel {
+public class UserView extends JPanel implements MouseListener {
 
   protected JPanel followPanel;
 
@@ -18,21 +19,36 @@ public class UserView extends JPanel {
 
   protected UserFollowupController userFollowupController;
 
+  protected Color defaultBackgroundColor;
+
+  protected LineBorder defaultLineBorder;
+
   public UserView(User user, UserFollowupController controller, boolean ownProfile, boolean followed) {
     this.userFollowupController = controller;
     this.setLayout(new GridBagLayout());
+    this.addMouseListener(this);
 
     // bordures
     this.setOpaque(true);
-    this.setBorder(new LineBorder(ownProfile ? Color.CYAN : Color.BLACK, 1, true));
+    if (ownProfile) {
+      this.defaultLineBorder = new LineBorder(Color.BLACK, 1, true);
+      this.defaultBackgroundColor = Color.CYAN;
+    } else {
+      this.defaultLineBorder = new LineBorder(Color.BLACK, 1, true);
+      this.defaultBackgroundColor = Color.WHITE;
+    }
+    this.setBorder(this.defaultLineBorder);
+    this.setBackground(this.defaultBackgroundColor);
 
     // avatar
     JLabel imgAvatar = new JLabel(new ImageIcon(new ImageIcon(user.getAvatarPath()).getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+    imgAvatar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
     this.add(imgAvatar, new GridBagConstraints(0, 0, 1, 1, 0, 1, GridBagConstraints.WEST,
         GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
     JPanel identitePanel = new JPanel();
     identitePanel.setLayout(new GridBagLayout());
+    identitePanel.setOpaque(false);
 
     // nom
     JLabel name = new JLabel(user.getName());
@@ -50,6 +66,8 @@ public class UserView extends JPanel {
 
     // Bouton d'abonnement
     followBtn = new JButton("S'abonner");
+    followBtn.addMouseListener(this);
+    followBtn.setBackground(this.defaultBackgroundColor);
     followBtn.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -63,6 +81,8 @@ public class UserView extends JPanel {
 
     // Bouton de désabonnement
     unfollowBtn = new JButton("Se désabonner");
+    unfollowBtn.addMouseListener(this);
+    unfollowBtn.setBackground(this.defaultBackgroundColor);
     unfollowBtn.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -95,4 +115,34 @@ public class UserView extends JPanel {
     followPanel.repaint();
   }
 
+  @Override
+  public void mouseClicked(MouseEvent e) {
+    // rien
+  }
+
+  @Override
+  public void mousePressed(MouseEvent e) {
+    // rien
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent e) {
+    // rien
+  }
+
+  @Override
+  public void mouseEntered(MouseEvent e) {
+    this.setBackground(Color.lightGray);
+    this.followBtn.setBackground(Color.lightGray);
+    this.unfollowBtn.setBackground(Color.lightGray);
+    this.setBorder(new LineBorder(Color.RED, 1, true));
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e) {
+    this.setBackground(this.defaultBackgroundColor);
+    this.followBtn.setBackground(this.defaultBackgroundColor);
+    this.unfollowBtn.setBackground(this.defaultBackgroundColor);
+    this.setBorder(this.defaultLineBorder);
+  }
 }

@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.message.user;
+package main.java.com.ubo.tp.message.user.controller;
 
 import main.java.com.ubo.tp.message.core.EntityManager;
 import main.java.com.ubo.tp.message.core.database.IDatabase;

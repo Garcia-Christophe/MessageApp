@@ -1,27 +1,38 @@
 <project>
 
+    <property name="src.dir"     value="src"/>
+    <property name="build.dir"   value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="jar.dir"     value="${build.dir}/jar"/>
+
+    <property name="res-fxml.dir"  value="src/main/resources/fxml"/>
+    <property name="res-img.dir"  value="src/main/resources/images"/>
+
+    <property name="main-class"  value="main.java.com.ubo.tp.message.MessageAppLauncherFx"/>
+    <property name="jar-name"  value="MessageApp.jar"/>
+
     <target name="clean">
         <delete dir="build"/>
     </target>
 
     <target name="compile">
-        <mkdir dir="build/classes"/>
-        <javac srcdir="src" destdir="build/classes" fork="true"/>
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="build/classes" fork="true"/>
     </target>
 
     <target name="jar" depends="compile">
-        <mkdir dir="build/jar"/>
-        <jar destfile="build/jar/MessageApp.jar" basedir="build/classes">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${jar-name}" basedir="${classes.dir}">
             <manifest>
-                <attribute name="Main-Class" value="main.java.com.ubo.tp.message.MessageAppLauncherFx"/>
+                <attribute name="Main-Class" value="${main-class}"/>
             </manifest>
-            <fileset dir="src/main/resources/fxml"/>
-            <fileset dir="src/main/resources/images"/>
+            <fileset dir="${res-fxml.dir}"/>
+            <fileset dir="${res-img.dir}"/>
         </jar>
     </target>
 
     <target name="run" depends="jar">
-        <java jar="build/jar/MessageApp.jar" fork="true"/>
+        <java jar="${jar.dir}/${jar-name}" fork="true"/>
     </target>
 
     <target name="clean-build" depends="clean,jar"/>

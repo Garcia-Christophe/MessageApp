@@ -6,7 +6,6 @@ import main.java.com.ubo.tp.message.core.database.IDatabase;
 import main.java.com.ubo.tp.message.ihm.MessageApp;
 import main.java.com.ubo.tp.message.ihm.session.ISession;
 import main.java.com.ubo.tp.message.ihm.session.Session;
-import mock.MessageAppMock;
 
 /**
  * Classe de lancement de l'application.
@@ -31,10 +30,10 @@ public class MessageAppLauncher {
 		EntityManager entityManager = new EntityManager(database);
 		ISession session = new Session();
 
-		if (IS_MOCK_ENABLED) {
+		/*if (IS_MOCK_ENABLED) {
 			MessageAppMock mock = new MessageAppMock(database, entityManager);
 			mock.showGUI();
-		}
+		}*/
 
 		MessageApp messageApp = new MessageApp(database, entityManager, session);
 		messageApp.init();

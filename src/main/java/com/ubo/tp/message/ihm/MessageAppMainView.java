@@ -1,9 +1,11 @@
 package main.java.com.ubo.tp.message.ihm;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import static java.lang.System.exit;
 
@@ -42,8 +44,14 @@ public class MessageAppMainView {
   protected void initGUI() {
     // Création de la fenetre principale
     this.mFrame = new JFrame("MessageApp");
-    ImageIcon logo = new ImageIcon("src/main/resources/images/logo_50.png");
-    this.mFrame.setIconImage(logo.getImage());
+    ImageIcon logo = null;
+    try {
+      Image image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("logo_50.png")));
+      logo = new ImageIcon(image);
+      this.mFrame.setIconImage(image);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     // Setup panels
     this.panelCenter = new JPanel();
@@ -57,7 +65,12 @@ public class MessageAppMainView {
     JMenuBar menubar = new JMenuBar();
     JMenu menu = new JMenu("Menu");
     JMenuItem menuItemQuitter = new JMenuItem("Quitter");
-    menuItemQuitter.setIcon(new ImageIcon("src/main/resources/images/exitIcon_20.png"));
+    try {
+      Image image = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("exitIcon_20.png")));
+      menuItemQuitter.setIcon(new ImageIcon(image));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     menuItemQuitter.setToolTipText("Fermer l'application");
     menuItemQuitter.addActionListener(new ActionListener() {
       @Override
@@ -67,6 +80,7 @@ public class MessageAppMainView {
     });
 
     JMenuItem menuItemAPropos = new JMenuItem("?");
+    ImageIcon finalLogo = logo;
     menuItemAPropos.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -75,7 +89,7 @@ public class MessageAppMainView {
                 "<p style=\"text-align: center\">UBO M2-TIIL</p>" +
                 "<p style=\"text-align: center\">Département Informatique</p>" +
                 "</html>", "A propos",
-            JOptionPane.PLAIN_MESSAGE, logo);
+            JOptionPane.PLAIN_MESSAGE, finalLogo);
       }
     });
     menu.add(menuItemQuitter);

@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+// version de Java
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// ressources
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources/images', 'src/main/resources/fxml']
+        }
+    }
+}
+
+// génération du jar
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'main.java.com.ubo.tp.message.MessageAppLauncherFx'
+        )
+    }
+}

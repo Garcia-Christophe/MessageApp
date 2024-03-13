@@ -11,6 +11,15 @@
     <property name="main-class"  value="main.java.com.ubo.tp.message.MessageAppLauncherFx"/>
     <property name="jar-name"  value="MessageApp.jar"/>
 
+    <!-- Sonar -->
+    <property name="sonar.host.url" value="http://localhost:9000" />
+    <property name="sonar.projectKey" value="messageapp" />
+    <property name="sonar.projectName" value="messageapp" />
+    <property name="sonar.projectVersion" value="1.0" />
+    <property name="sonar.sources" value="src" />
+    <property name="sonar.binaries" value="target" />
+    <property name="sonar.sourceEncoding" value="UTF-8" />
+
     <target name="clean">
         <delete dir="build"/>
     </target>

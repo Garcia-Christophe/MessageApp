@@ -14,8 +14,6 @@ pipeline {
                 sh 'ant compile'
             }
         }
-    }
-    node {
         stage('SCM') {
             checkout scm
         }

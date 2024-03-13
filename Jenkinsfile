@@ -14,13 +14,15 @@ pipeline {
                 sh 'ant compile'
             }
         }
-        stage('SCM') {
-            checkout scm
-        }
-        stage('SonarQube Analysis') {
-            def scannerHome = tool 'ant';
-            withSonarQubeEnv() {
-                sh "${scannerHome}/bin/sonar-scanner"
+        node {
+            stage('SCM') {
+                checkout scm
+            }
+            stage('SonarQube Analysis') {
+                def scannerHome = tool 'ant';
+                withSonarQubeEnv() {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
             }
         }
     }

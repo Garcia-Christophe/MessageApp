@@ -1,0 +1,14 @@
+
+\
+java:S1075-"ARefactor your code to get this URI from a customizable parameter.(ïÅ²ºùÿÿÿÿ
+E	java:S106a"+Replace this use of System.err by a logger.(Şàš¬øÿÿÿÿ
+@	java:S106|"+Replace this use of System.out by a logger.(åöØ²
+A	java:S106"+Replace this use of System.out by a logger.(õß†ç
+A	java:S106†"+Replace this use of System.out by a logger.(»º•‘
+F	java:S106‹"+Replace this use of System.out by a logger.(®™Ä—ùÿÿÿÿ
+A	java:S106"+Replace this use of System.out by a logger.(ßó×†
+F	java:S106•"+Replace this use of System.out by a logger.(ãÇœûÿÿÿÿ
+?
+java:S1128")Remove this unused import 'java.io.File'.(†Ğ¥Å
+Q
+java:S1128";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ

@@ -1,0 +1,9 @@
+TODO:
+
+Obligatoires : 
+- JavaFX
+	- connexion : ok
+	- inscription : ok
+	- déconnexion: ok
+	- liste messages
+	- liste users : ok

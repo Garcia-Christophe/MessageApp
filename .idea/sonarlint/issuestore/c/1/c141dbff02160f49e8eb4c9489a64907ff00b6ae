@@ -1,14 +1,14 @@
 
-\
-java:S1075-"ARefactor your code to get this URI from a customizable parameter.(ïÅ²ºùÿÿÿÿ
-E	java:S106a"+Replace this use of System.err by a logger.(Şàš¬øÿÿÿÿ
-@	java:S106|"+Replace this use of System.out by a logger.(åöØ²
-A	java:S106"+Replace this use of System.out by a logger.(õß†ç
-A	java:S106†"+Replace this use of System.out by a logger.(»º•‘
-F	java:S106‹"+Replace this use of System.out by a logger.(®™Ä—ùÿÿÿÿ
-A	java:S106"+Replace this use of System.out by a logger.(ßó×†
-F	java:S106•"+Replace this use of System.out by a logger.(ãÇœûÿÿÿÿ
-?
-java:S1128")Remove this unused import 'java.io.File'.(†Ğ¥Å
-Q
-java:S1128";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ
+‚
+java:S1075-"ARefactor your code to get this URI from a customizable parameter.(ïÅ²ºùÿÿÿÿJ$658b3cd2-21bc-4f05-a335-8b83b29c4b30
+k	java:S106a"+Replace this use of System.err by a logger.(Şàš¬øÿÿÿÿJ$dd1873ec-2b01-4f78-a372-4609a243cd47
+f	java:S106|"+Replace this use of System.out by a logger.(åöØ²J$f59bb99d-da95-40e2-a695-5a17eba3430b
+g	java:S106"+Replace this use of System.out by a logger.(õß†çJ$bd37e5ff-7eaa-4171-b63b-8078fa1a921c
+g	java:S106†"+Replace this use of System.out by a logger.(»º•‘J$04dd0357-fa5b-4d1d-a598-d656bf1accce
+l	java:S106‹"+Replace this use of System.out by a logger.(®™Ä—ùÿÿÿÿJ$69c94c62-09fa-4249-8706-6287cc30643c
+g	java:S106"+Replace this use of System.out by a logger.(ßó×†J$6787cb50-29db-46a7-90cd-76309673b65e
+l	java:S106•"+Replace this use of System.out by a logger.(ãÇœûÿÿÿÿJ$910d7ad3-850b-45e2-9dc6-d9fb1cabaa92
+F
+java:S1128")Remove this unused import 'java.io.File'.(†Ğ¥Å8ëªßã1
+X
+java:S1128";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ8ëªßã1

@@ -102,21 +102,25 @@ public class SignUpView extends JPanel {
         SignUpView.this.name = SignUpView.this.inputName.getText();
         SignUpView.this.tag = SignUpView.this.inputTag.getText();
         SignUpView.this.password = new String(SignUpView.this.inputPassword.getPassword());
-        if (SignUpView.this.signUpController.signUp(SignUpView.this.name, SignUpView.this.tag, SignUpView.this.password, SignUpView.this.avatarPath)) {
-          System.out.println("utilisateur créé");
-
-          SignUpView.this.tag = "";
-          SignUpView.this.name = "";
-          SignUpView.this.password = "";
-          SignUpView.this.avatarPath = "";
-          SignUpView.this.inputTag.setText("");
-          SignUpView.this.inputName.setText("");
-          SignUpView.this.inputPassword.setText("");
-          SignUpView.this.imgAvatarPanel.removeAll();
-          SignUpView.this.imgAvatarPanel.revalidate();
-          SignUpView.this.imgAvatarPanel.repaint();
+        if (SignUpView.this.name == null || SignUpView.this.name.isEmpty() || SignUpView.this.tag == null || SignUpView.this.tag.isEmpty() || SignUpView.this.password == null || SignUpView.this.password.isEmpty()) {
+          System.err.println("Champs manquants !");
         } else {
-          System.err.println("Ce tag est déj pris par un autre utilisateur !");
+          if (SignUpView.this.signUpController.signUp(SignUpView.this.name, SignUpView.this.tag, SignUpView.this.password, SignUpView.this.avatarPath)) {
+            System.out.println("utilisateur créé");
+
+            SignUpView.this.tag = "";
+            SignUpView.this.name = "";
+            SignUpView.this.password = "";
+            SignUpView.this.avatarPath = "";
+            SignUpView.this.inputTag.setText("");
+            SignUpView.this.inputName.setText("");
+            SignUpView.this.inputPassword.setText("");
+            SignUpView.this.imgAvatarPanel.removeAll();
+            SignUpView.this.imgAvatarPanel.revalidate();
+            SignUpView.this.imgAvatarPanel.repaint();
+          } else {
+            System.err.println("Ce tag est déj pris par un autre utilisateur !");
+          }
         }
       }
     });

@@ -26,25 +26,30 @@ public class SignUpController implements ISwitchSignView  {
   }
 
   public boolean signUp(String name, String tag, String password, String avatarPath) {
-    Set<User> users = this.mDatabase.getUsers();
-    User user = new User(UUID.randomUUID(), tag, password, name, new HashSet<String>(), avatarPath);
-    boolean isInscriptionOk = true;
+    if (name != null && !name.isEmpty() && tag != null && !tag.isEmpty() && password != null && !password.isEmpty()) {
+      Set<User> users = this.mDatabase.getUsers();
+      User user = new User(UUID.randomUUID(), tag, password, name, new HashSet<String>(), avatarPath);
+      boolean isInscriptionOk = true;
 
-    // Vérification de la connexion
-    Iterator<User> userIt = users.iterator();
-    while (isInscriptionOk && userIt.hasNext()) {
-      User u = userIt.next();
-      if (u.getUserTag().equals(tag)) {
-        isInscriptionOk = false;
+      // Vérification de la connexion
+      Iterator<User> userIt = users.iterator();
+      while (isInscriptionOk && userIt.hasNext()) {
+        User u = userIt.next();
+        if (u.getUserTag().equals(tag)) {
+          isInscriptionOk = false;
+        }
       }
-    }
 
-    if (isInscriptionOk) {
-      // Ajout le nouvel utilisateur et remonte l'information de connexion
-      this.mEntityManager.writeUserFile(user);
-    }
+      if (isInscriptionOk) {
+        // Ajout le nouvel utilisateur et remonte l'information de connexion
+        this.mEntityManager.writeUserFile(user);
+      }
 
-    return isInscriptionOk;
+      return isInscriptionOk;
+    } else {
+      System.err.println("Champs manquants !");
+      return false;
+    }
   }
 
   @Override

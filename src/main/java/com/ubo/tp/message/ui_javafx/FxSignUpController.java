@@ -23,7 +23,11 @@ public class FxSignUpController {
   }
 
   @FXML public void signUp() {
-    this.signUpController.signUp(nameField.getText(), tagField.getText(), passwordField.getText(), null);
+    if (nameField.getText() == null || nameField.getText().isEmpty() || tagField.getText() == null || tagField.getText().isEmpty() || passwordField.getText() == null || passwordField.getText().isEmpty()) {
+      System.err.println("Champs manquants !");
+    } else {
+      this.signUpController.signUp(nameField.getText(), tagField.getText(), passwordField.getText(), null);
+    }
   }
 
   @FXML public void switchToSignInView() {
